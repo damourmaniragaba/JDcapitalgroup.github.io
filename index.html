@@ -8,6 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="mask-icon" href="favicon.svg" color="#15495f">
+<meta name="theme-color" content="#15495f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JD Capital Group | Commercial Real Estate Advisory, Rwanda">
+<meta property="og:description" content="JD Capital Group is a full-service commercial real estate advisory firm in Rwanda, covering capital markets, leasing, valuation, property management and research across every asset type.">
+<meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -28,7 +35,13 @@
 
 <header id="site-header">
   <nav class="wrap">
-    <a href="#" class="logo"><span class="mark"></span>JD CAPITAL GROUP</a>
+    <a href="#" class="logo"><svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path d="M2 2H30L38 10V38H2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <line x1="6" y1="33" x2="34" y2="33" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+        <rect x="8" y="25" width="4" height="8" fill="var(--blue)" opacity="0.55"/>
+        <rect x="15" y="19" width="4" height="14" fill="var(--blue)" opacity="0.8"/>
+        <rect x="22" y="13" width="4" height="20" fill="var(--blue)"/>
+      </svg>JD CAPITAL GROUP</a>
     <div class="nav-links" id="nav-links">
       <a href="#services">Services</a>
       <a href="#assets">Asset types</a>
@@ -44,7 +57,26 @@
 </header>
 
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-bg" aria-hidden="true">
+    <svg class="hero-skyline" viewBox="0 0 1440 220" preserveAspectRatio="none" fill="rgba(255,255,255,0.055)">
+      <rect x="40" y="130" width="70" height="90"/>
+      <rect x="130" y="90" width="50" height="130"/>
+      <rect x="200" y="150" width="90" height="70"/>
+      <rect x="310" y="60" width="60" height="160"/>
+      <rect x="390" y="120" width="100" height="100"/>
+      <rect x="510" y="160" width="45" height="60"/>
+      <rect x="575" y="80" width="80" height="140"/>
+      <rect x="675" y="125" width="55" height="95"/>
+      <rect x="750" y="40" width="110" height="180"/>
+      <rect x="880" y="145" width="65" height="75"/>
+      <rect x="965" y="100" width="90" height="120"/>
+      <rect x="1075" y="155" width="50" height="65"/>
+      <rect x="1145" y="70" width="75" height="150"/>
+      <rect x="1240" y="135" width="60" height="85"/>
+      <rect x="1320" y="110" width="90" height="110"/>
+      <path d="M340 60V42M805 40V20" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+    </svg>
+  </div>
   <div class="wrap hero-inner">
     <div class="hero-copy">
       <span class="eyebrow">Commercial Real Estate Advisory. Rwanda.</span>
@@ -65,7 +97,7 @@
 
 <section class="services" id="services">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">What we do</span>
       <h2>Five disciplines. One advisory team.</h2>
     </div>
@@ -75,7 +107,7 @@
 
 <section class="assets" id="assets">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Coverage</span>
       <h2>We work across all asset types.</h2>
     </div>
@@ -85,7 +117,7 @@
 
 <section class="insights" id="insights">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Insights</span>
       <h2>Market intelligence from our research desk.</h2>
     </div>
@@ -95,7 +127,7 @@
 
 <section class="approach" id="approach">
   <div class="wrap approach-grid">
-    <div class="approach-copy">
+    <div class="approach-copy reveal">
       <span class="eyebrow">Our approach</span>
       <h2>One team. Every discipline. No hand-offs.</h2>
       <p>Most real estate decisions in Rwanda still move through several disconnected specialists: a broker for the lease, a separate firm for the valuation, another for management. JD Capital Group was built to close those gaps, holding itself to the standard of the global full-service advisors and applying it to Rwanda's market, sector by sector.</p>
@@ -106,7 +138,7 @@
 
 <section id="contact">
   <div class="wrap contact-grid">
-    <div class="contact-info">
+    <div class="contact-info reveal">
       <span class="eyebrow">Get in touch</span>
       <h2>Let's talk about your property decision.</h2>
       <div class="contact-detail"><span class="k">Office</span><span>Kigali Heights, KG 7 Ave, Kigali, Rwanda</span></div>
@@ -114,7 +146,7 @@
       <div class="contact-detail"><span class="k">Email</span><span><a href="mailto:damourmaniragaba1@gmail.com">damourmaniragaba1@gmail.com</a></span></div>
       <div class="contact-detail"><span class="k">Hours</span><span>Mon to Fri, 8:00 to 18:00 CAT</span></div>
     </div>
-    <form id="inquiry-form">
+    <form id="inquiry-form" class="reveal">
       <div class="field">
         <label for="name">Full name</label>
         <input id="name" name="name" type="text" required placeholder="Your name">
@@ -148,7 +180,13 @@
 <footer>
   <div class="wrap footer-grid">
     <div class="footer-brand">
-      <div class="logo"><span class="mark"></span>JD CAPITAL GROUP</div>
+      <div class="logo"><svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path d="M2 2H30L38 10V38H2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <line x1="6" y1="33" x2="34" y2="33" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+        <rect x="8" y="25" width="4" height="8" fill="var(--blue)" opacity="0.55"/>
+        <rect x="15" y="19" width="4" height="14" fill="var(--blue)" opacity="0.8"/>
+        <rect x="22" y="13" width="4" height="20" fill="var(--blue)"/>
+      </svg>JD CAPITAL GROUP</div>
       <p>Full-service commercial real estate advisory, headquartered in Kigali, serving clients across Rwanda.</p>
     </div>
     <div class="footer-col">
@@ -186,6 +224,10 @@
     <span>All asset types. All of Rwanda.</span>
   </div>
 </footer>
+
+<button id="back-to-top" class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 5l-7 7h4v7h6v-7h4z" fill="currentColor"/></svg>
+</button>
 
 <script src="script.js"></script>
 </body>
