@@ -51,8 +51,8 @@ const PRINCIPLES = [
 
 function renderServices() {
   const grid = document.getElementById("service-grid");
-  grid.innerHTML = SERVICES.map(s => `
-    <div class="service-card">
+  grid.innerHTML = SERVICES.map((s, i) => `
+    <div class="service-card reveal" style="transition-delay:${i * 60}ms">
       <span class="idx">${s.idx}</span>
       <h3>${s.title}</h3>
       <p>${s.desc}</p>
@@ -62,8 +62,8 @@ function renderServices() {
 
 function renderAssets() {
   const grid = document.getElementById("asset-grid");
-  grid.innerHTML = ASSET_TYPES.map(a => `
-    <div class="asset-card">
+  grid.innerHTML = ASSET_TYPES.map((a, i) => `
+    <div class="asset-card reveal" style="transition-delay:${(i % 5) * 60}ms">
       <span class="n">${a.n}</span>
       <h4>${a.name}</h4>
     </div>
@@ -76,14 +76,14 @@ function renderAssets() {
 function renderTicker() {
   const ticker = document.getElementById("ticker-inner");
   ticker.innerHTML = TICKER.map(t => `
-    <span class="ticker-item">${t.label}: <b>${t.value}</b></span>
+    <span class="ticker-item">${t.label}: <b data-count="${t.value}">${t.value}</b></span>
   `).join("");
 }
 
 function renderInsights() {
   const grid = document.getElementById("insight-grid");
-  grid.innerHTML = INSIGHTS.map(i => `
-    <article class="insight-card">
+  grid.innerHTML = INSIGHTS.map((i, idx) => `
+    <article class="insight-card reveal" style="transition-delay:${idx * 80}ms">
       <div class="insight-thumb"></div>
       <div class="insight-body">
         <span class="eyebrow">${i.eyebrow}</span>
@@ -96,8 +96,8 @@ function renderInsights() {
 
 function renderPrinciples() {
   const wrap = document.getElementById("principles");
-  wrap.innerHTML = PRINCIPLES.map(p => `
-    <div class="principle">
+  wrap.innerHTML = PRINCIPLES.map((p, i) => `
+    <div class="principle reveal" style="transition-delay:${i * 70}ms">
       <span class="idx">${p.idx}</span>
       <div><h4>${p.title}</h4><p>${p.desc}</p></div>
     </div>
@@ -175,3 +175,107 @@ form.addEventListener("submit", async (e) => {
     submitBtn.textContent = "Send inquiry";
   }
 });
+
+// ============================================================
+// MOTION: scroll reveal, header state, scrollspy, count-up,
+// back-to-top. All skipped/short-circuited for reduced motion.
+// ============================================================
+
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// --- scroll reveal ---
+const revealEls = document.querySelectorAll(".reveal");
+if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+  revealEls.forEach(el => el.classList.add("in-view"));
+} else {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  revealEls.forEach(el => revealObserver.observe(el));
+}
+
+// --- sticky header shadow on scroll ---
+const siteHeader = document.getElementById("site-header");
+let lastScrollState = false;
+function updateHeaderState() {
+  const scrolled = window.scrollY > 8;
+  if (scrolled !== lastScrollState) {
+    siteHeader.classList.toggle("scrolled", scrolled);
+    lastScrollState = scrolled;
+  }
+}
+updateHeaderState();
+window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+// --- scrollspy: highlight nav link for section in view ---
+const spySections = ["services", "assets", "insights", "approach", "contact"]
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
+const spyLinks = Array.from(navLinks.querySelectorAll('a[href^="#"]'));
+
+if ("IntersectionObserver" in window && spySections.length) {
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.id;
+      spyLinks.forEach(link => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+      });
+    });
+  }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+  spySections.forEach(section => spyObserver.observe(section));
+}
+
+// --- animated count-up for numeric ticker stats ---
+function animateCount(el) {
+  const raw = el.dataset.count;
+  if (!/^\d+$/.test(raw)) return; // skip non-numeric values like "Kigali"
+  const target = parseInt(raw, 10);
+  const digits = raw.length;
+  const duration = 1100;
+  const start = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(target * eased);
+    el.textContent = String(value).padStart(digits, "0");
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const tickerEl = document.getElementById("ticker-inner");
+if (tickerEl) {
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    // leave static values as rendered
+  } else {
+    const tickerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tickerEl.querySelectorAll("[data-count]").forEach(animateCount);
+          tickerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    tickerObserver.observe(tickerEl);
+  }
+}
+
+// --- back to top ---
+const backToTop = document.getElementById("back-to-top");
+if (backToTop) {
+  function updateBackToTop() {
+    backToTop.classList.toggle("show", window.scrollY > 500);
+  }
+  updateBackToTop();
+  window.addEventListener("scroll", updateBackToTop, { passive: true });
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  });
+}
