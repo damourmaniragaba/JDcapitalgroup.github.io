@@ -33,10 +33,31 @@ const TICKER = [
 ];
 
 const INSIGHTS = [
-  { eyebrow: "Capital Markets", title: "Where investor demand is heading in Kigali's office market", desc: "A look at how institutional and private capital are approaching Class A office assets this cycle." },
-  { eyebrow: "Retail", title: "Kigali's retail pipeline and what it means for tenants", desc: "New mixed-use and retail developments are reshaping lease terms and anchor tenant strategy." },
-  { eyebrow: "Industrial", title: "Logistics demand along Rwanda's trade corridors", desc: "Warehousing and distribution assets are drawing fresh attention as trade volumes grow." },
+  { eyebrow: "Capital Markets", icon: "capital", title: "Where investor demand is heading in Kigali's office market", desc: "A look at how institutional and private capital are approaching Class A office assets this cycle." },
+  { eyebrow: "Retail", icon: "retail", title: "Kigali's retail pipeline and what it means for tenants", desc: "New mixed-use and retail developments are reshaping lease terms and anchor tenant strategy." },
+  { eyebrow: "Industrial", icon: "industrial", title: "Logistics demand along Rwanda's trade corridors", desc: "Warehousing and distribution assets are drawing fresh attention as trade volumes grow." },
 ];
+
+// Line-art motifs for the insight thumbnails, one per topic, drawn in
+// the site's existing stroke style rather than stock photography.
+const INSIGHT_ICONS = {
+  capital: `<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 40h36"/>
+    <path d="M12 40V27M20 40V19M28 40V23M36 40V13"/>
+    <path d="M30 11l6-6m0 0h-6.5M36 5v6.5"/>
+  </svg>`,
+  retail: `<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 19l2.4-9h27.2l2.4 9"/>
+    <path d="M8 19a4 4 0 008 0 4 4 0 008 0 4 4 0 008 0 4 4 0 008 0"/>
+    <path d="M10 19v20h28V19"/>
+    <rect x="20" y="27" width="8" height="12"/>
+  </svg>`,
+  industrial: `<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 40h36"/>
+    <path d="M8 40V23l5-6 5 6v-6l5-6 5 6v-6l5-6 5 6v23"/>
+    <rect x="15" y="31" width="6" height="9"/>
+  </svg>`,
+};
 
 const PRINCIPLES = [
   { idx: "01", title: "Local market, institutional standard", desc: "Rwanda specific expertise delivered with the process discipline of global advisory practice." },
@@ -84,7 +105,7 @@ function renderInsights() {
   const grid = document.getElementById("insight-grid");
   grid.innerHTML = INSIGHTS.map((i, idx) => `
     <article class="insight-card reveal" style="transition-delay:${idx * 80}ms">
-      <div class="insight-thumb"></div>
+      <div class="insight-thumb"><span class="insight-icon">${INSIGHT_ICONS[i.icon] || ""}</span></div>
       <div class="insight-body">
         <span class="eyebrow">${i.eyebrow}</span>
         <h3>${i.title}</h3>
